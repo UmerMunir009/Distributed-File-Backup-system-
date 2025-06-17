@@ -48,14 +48,15 @@ def upload():
                 chunk_info.append((chunk_hash, url))
             print(f"[UPLOAD] Replicated to all nodes")
         else:
-            # Split into chunks and upload each to one node
+            # Split into chunks and upload each to two nodes
             chunks = split_into_chunks(encrypted_data)
             print(f"[UPLOAD] Splitting into {len(chunks)} chunks")
             for i, chunk in enumerate(chunks):
                 chunk_hash = sha256(chunk)
-                node_url = upload_to_node(chunk, chunk_hash)
-                print(f"[UPLOAD] Chunk {i}: {chunk_hash} → {node_url}")
-                chunk_info.append((chunk_hash, node_url))
+                node_urls = upload_to_node(chunk, chunk_hash)  # "url1,url2"
+                for node_url in node_urls.split(','):
+                    print(f"[UPLOAD] Chunk {i}: {chunk_hash} → {node_url}")
+                    chunk_info.append((chunk_hash, node_url))
 
         _save_metadata(filename, chunk_info)
         print(f"[UPLOAD] Metadata saved for {filename}")
@@ -87,11 +88,10 @@ def download_file(filename):
 
             full_data = b''
 
-            # Detect if file is replicated or chunked
+            # Check if all hashes are same = full file replicated
             is_replicated = all(chunk_hash == chunk_nodes[0][0] for chunk_hash, _ in chunk_nodes)
 
             if is_replicated:
-                # Try to retrieve the single replicated chunk from any node
                 chunk_hash = chunk_nodes[0][0]
                 for _, node_url in chunk_nodes:
                     try:
@@ -108,7 +108,7 @@ def download_file(filename):
                 else:
                     return f"Chunk {chunk_hash} unavailable from all nodes", 500
             else:
-                # Multi-chunk case
+                # Reconstruct full file from chunked data
                 chunk_map = {}
                 for chunk_hash, node_url in chunk_nodes:
                     if chunk_hash not in chunk_map:

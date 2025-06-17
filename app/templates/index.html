@@ -10,10 +10,35 @@
 
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #852333;
+      background: linear-gradient(135deg, #1a1c2c, #2e1f47);
+      color: #eaeaea;
       margin: 0;
-      padding: 40px;
-      color: #333;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background-color: #14141f;
+      padding: 20px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid #00c9ff33;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+      color: #00c9ff;
+    }
+
+    header img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+      background-color: #444;
     }
 
     .container {
@@ -22,21 +47,28 @@
       max-width: 1000px;
       margin: auto;
       gap: 30px;
+      padding: 40px 20px;
+      flex: 1;
     }
 
     .panel {
       flex: 1;
       min-width: 300px;
-      background: #fff0f0;
+      background: linear-gradient(135deg, #222435, #2f2e48);
       padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      transition: transform 0.3s ease;
+    }
+
+    .panel:hover {
+      transform: translateY(-5px);
     }
 
     h2 {
-      color: #400a0a;
+      color: #00c9ff;
       margin-bottom: 20px;
-      border-bottom: 2px solid #d7a4a4;
+      border-bottom: 2px solid #00c9ff88;
       padding-bottom: 10px;
     }
 
@@ -44,26 +76,26 @@
       margin-bottom: 25px;
     }
 
-    input[type="file"] {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border-radius: 8px;
-      border: 1px solid #b77a7a;
-      background-color: #ffe5e5;
-      color: #400a0a;
-      font-size: 14px;
-    }
-
+    input[type="file"],
     input[type="password"] {
       width: 100%;
       padding: 12px;
       margin: 10px 0;
       border-radius: 8px;
-      border: 1px solid #b77a7a;
-      background-color: #ffe5e5;
-      color: #400a0a;
+      border: 1px solid #444;
+      background-color: #1b1b2d;
+      color: #f0f0f0;
       font-size: 14px;
+      transition: border 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    input[type="file"]:hover,
+    input[type="password"]:hover,
+    input[type="file"]:focus,
+    input[type="password"]:focus {
+      border-color: #00c9ff;
+      box-shadow: 0 0 5px #00c9ff99;
+      outline: none;
     }
 
     button {
@@ -71,16 +103,17 @@
       padding: 12px;
       border-radius: 8px;
       border: none;
-      background-color: #a62727;
+      background: linear-gradient(to right, #00c9ff, #92fe9d);
       color: white;
       font-size: 14px;
       cursor: pointer;
-      transition: background 0.25s ease;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
       margin-top: 10px;
     }
 
     button:hover {
-      background-color: #7e1d1d;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 201, 255, 0.4);
     }
 
     ul {
@@ -89,17 +122,23 @@
     }
 
     li {
-      background: #fcdede;
+      background: linear-gradient(135deg, #1e1e30, #292943);
       margin-bottom: 15px;
       padding: 15px 20px;
       border-radius: 10px;
-      box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+      transition: background 0.3s ease;
+    }
+
+    li:hover {
+      background: linear-gradient(135deg, #2c2c40, #3a3a5c);
     }
 
     li strong {
       display: block;
       margin-bottom: 8px;
-      color: #852333;
+      color: #00dbde;
+      font-weight: 600;
     }
 
     li form {
@@ -115,16 +154,45 @@
       margin-top: 8px;
       width: 100%;
       padding: 10px 16px;
+      background: linear-gradient(to right, #8e2de2, #4a00e0);
+    }
+
+    li form button:hover {
+      box-shadow: 0 3px 10px rgba(138, 43, 226, 0.4);
+    }
+
+    footer {
+      background-color: #14141f;
+      padding: 20px 40px;
+      color: #aaa;
+      text-align: center;
+      border-top: 2px solid #00c9ff33;
+    }
+
+    footer h3 {
+      color: #00c9ff;
+      margin-bottom: 10px;
     }
 
     @media (max-width: 768px) {
       .container {
         flex-direction: column;
       }
+
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
     }
   </style>
 </head>
 <body>
+  <header>
+    <h1>Secure File Backup Distributed System</h1>
+    <img src="https://w7.pngwing.com/pngs/770/38/png-transparent-computer-icons-distribution-marketing-distribution-blue-content-marketing-symmetry-thumbnail.png" alt="Logo">
+  </header>
+
   <div class="container">
     <div class="panel">
       <h2>Upload File</h2>
@@ -150,7 +218,11 @@
       </ul>
     </div>
   </div>
+
+  <footer>
+    <h3>Group Members</h3>
+    <p>Muhammad Umer Munir (FA22-BCS-148)</p>
+    <p>Talha Younas (FA22-BCS-108)</p>
+  </footer>
 </body>
 </html>
-
-

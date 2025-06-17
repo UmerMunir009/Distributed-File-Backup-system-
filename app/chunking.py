@@ -9,8 +9,11 @@ def split_into_chunks(data: bytes) -> list:
     Otherwise, returns the full data as a single chunk.
     """
     if len(data) <= SPLIT_THRESHOLD:
+        print("Total chunks: 1")
         return [data]  # No chunking, treat as single chunk
-    return [data[i:i + CHUNK_SIZE] for i in range(0, len(data), CHUNK_SIZE)]
+    chunks = [data[i:i + CHUNK_SIZE] for i in range(0, len(data), CHUNK_SIZE)]
+    print(f"Total chunks: {len(chunks)}")
+    return chunks
 
 def sha256(data: bytes) -> str:
     """
