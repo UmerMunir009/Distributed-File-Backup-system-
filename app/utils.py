@@ -1,7 +1,7 @@
 import requests
 import itertools
 
-NODE_PORTS = [5001, 5002, 5003, 5004]
+NODE_PORTS = [5001, 5002, 5003, 5004,5005]
 NODE_URLS = [f"http://127.0.0.1:{port}" for port in NODE_PORTS]
 
 # Round-robin iterator
